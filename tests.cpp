@@ -22,3 +22,14 @@ TEST_CASE( "Empty string returns 0") {
 
 	REQUIRE(s.Add(num) == 0);
 }
+
+TEST_CASE("Single number returns its value") {
+
+	StringCalculator s;
+
+	int testnumber = 17;
+	std::string num = std::to_string(testnumber);
+
+	REQUIRE(s.Add(num) == testnumber);
+
+}
