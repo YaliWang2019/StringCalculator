@@ -1,6 +1,7 @@
 
 #include "StringCalculator.hpp"
 #include <string>
+#include <vector>
 
 StringCalculator::StringCalculator() {};
 
@@ -8,27 +9,32 @@ int StringCalculator::Add(std::string numbers)
 {
 	int output = 0;
 
-	std::string delim = ",";
-
 	if (!numbers.empty())
 	{
-		size_t delimeter_position = numbers.find(delim);
+		// the general idea is to create a vector holding each number
+		// from the input as distinct strings, which summed up at the
+		// end -- the loop runs through the input string until a
+		// delimiting character is seen, then begins the next entry
 
-		if (delimeter_position != std::string::npos)
-		{
-			output += std::stoi(numbers.substr(0, delimeter_position));
-			output += std::stoi(numbers.substr(delimeter_position + 1));
-		}
-		else if (numbers.find("\n") != std::string::npos)
-		{
-			delimeter_position = numbers.find("\n");
+		std::vector<std::string> entries;
 
-			output += std::stoi(numbers.substr(0, delimeter_position));
-			output += std::stoi(numbers.substr(delimeter_position + 1));
-		}
-		else
+		entries.push_back(numbers.substr(0, 1));
+		int current_entry = 0;
+
+		for (int i = 1; i < numbers.length(); i++)
 		{
-			output = std::stoi(numbers);
+			if (numbers.substr(i, 1) == "\n" || numbers.substr(i, 1) == ",") {
+				current_entry++;
+				i++;
+				entries.push_back(numbers.substr(i, 1));
+			}
+			else {
+				entries[current_entry] += numbers.substr(i, 1);
+			}
+		}
+
+		for (const auto& entry : entries) {
+			output += std::stoi(entry);
 		}
 	}
 
