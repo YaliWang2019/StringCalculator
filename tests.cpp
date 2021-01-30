@@ -27,9 +27,8 @@ TEST_CASE("Single number returns its value") {
 
 	StringCalculator s;
 
-	int testnumber = 17;
+	int testnumber = 145;
 	std::string num = std::to_string(testnumber);
 
 	REQUIRE(s.Add(num) == testnumber);
-
 }
