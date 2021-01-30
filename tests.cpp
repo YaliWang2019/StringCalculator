@@ -32,3 +32,17 @@ TEST_CASE("Single number returns its value") {
 
 	REQUIRE(s.Add(num) == testnumber);
 }
+
+TEST_CASE("Two comma-delimited numbers return sum") {
+
+	StringCalculator s;
+
+	int testnumber1 = 15;
+	int testnumber2 = 27;
+
+	std::string input = std::to_string(testnumber1);
+	input += ",";
+	input += std::to_string(testnumber2);
+
+	REQUIRE(s.Add(input) == testnumber1 + testnumber2);
+}
