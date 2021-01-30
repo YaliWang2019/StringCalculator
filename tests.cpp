@@ -60,3 +60,47 @@ TEST_CASE("Two newline-delimited numbers return sum") {
 
 	REQUIRE(s.Add(input) == testnumber1 + testnumber2);
 }
+
+TEST_CASE("Three delimited numbers return sum") {
+
+	StringCalculator s;
+
+	int testnumber1 = 314;
+	int testnumber2 = 372;
+	int testnumber3 = 336;
+
+	std::string input = std::to_string(testnumber1);
+	input += "\n";
+	input += std::to_string(testnumber2);
+	input += "\n";
+	input += std::to_string(testnumber3);
+
+	REQUIRE(s.Add(input) == testnumber1 + testnumber2 + testnumber3);
+
+	input.clear();
+	input = std::to_string(testnumber1);
+	input += ",";
+	input += std::to_string(testnumber2);
+	input += ",";
+	input += std::to_string(testnumber3);
+
+	REQUIRE(s.Add(input) == testnumber1 + testnumber2 + testnumber3);
+
+	input.clear();
+	input = std::to_string(testnumber1);
+	input += "\n";
+	input += std::to_string(testnumber2);
+	input += ",";
+	input += std::to_string(testnumber3);
+
+	REQUIRE(s.Add(input) == testnumber1 + testnumber2 + testnumber3);
+
+	input.clear();
+	input = std::to_string(testnumber1);
+	input += ",";
+	input += std::to_string(testnumber2);
+	input += "\n";
+	input += std::to_string(testnumber3);
+
+	REQUIRE(s.Add(input) == testnumber1 + testnumber2 + testnumber3);
+}
