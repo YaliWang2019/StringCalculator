@@ -19,6 +19,13 @@ int StringCalculator::Add(std::string numbers)
 			output += std::stoi(numbers.substr(0, delimeter_position));
 			output += std::stoi(numbers.substr(delimeter_position + 1));
 		}
+		else if (numbers.find("\n") != std::string::npos)
+		{
+			delimeter_position = numbers.find("\n");
+
+			output += std::stoi(numbers.substr(0, delimeter_position));
+			output += std::stoi(numbers.substr(delimeter_position + 1));
+		}
 		else
 		{
 			output = std::stoi(numbers);

@@ -51,8 +51,8 @@ TEST_CASE("Two newline-delimited numbers return sum") {
 	
 	StringCalculator s;
 
-	int testnumber1 = 15;
-	int testnumber2 = 27;
+	int testnumber1 = 314;
+	int testnumber2 = 372;
 
 	std::string input = std::to_string(testnumber1);
 	input += "\n";
