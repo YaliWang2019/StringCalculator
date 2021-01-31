@@ -104,3 +104,61 @@ TEST_CASE("Three delimited numbers return sum") {
 
 	REQUIRE(s.Add(input) == testnumber1 + testnumber2 + testnumber3);
 }
+
+TEST_CASE("Negative Numbers Throw an Exception") {
+
+	StringCalculator s;
+
+	int testnumber1 = 15;
+	int testnumber2 = -22;
+	int testnumber3 = 107;
+
+	// since negatives should always lead to an exception, need to test
+	// each possible case w/ a negative input; will start w/ a single
+	// negative value, then w/ two values, and finally w/ three
+
+	std::string input = std::to_string(testnumber2);
+
+	REQUIRE_THROWS_AS(s.Add(input), std::domain_error);
+
+	input.clear();
+	input = std::to_string(testnumber1);
+	input += ",";
+	input += std::to_string(testnumber2);
+
+	REQUIRE_THROWS_AS(s.Add(input), std::domain_error);
+
+	input.clear();
+	input = std::to_string(testnumber2);
+	input += ",";
+	input += std::to_string(testnumber1);
+
+	REQUIRE_THROWS_AS(s.Add(input), std::domain_error);
+
+	input.clear();
+	input = std::to_string(testnumber2);
+	input += ",";
+	input += std::to_string(testnumber1);
+	input += ",";
+	input += std::to_string(testnumber3);
+
+	REQUIRE_THROWS_AS(s.Add(input), std::domain_error);
+
+	input.clear();
+	input = std::to_string(testnumber1);
+	input += ",";
+	input += std::to_string(testnumber2);
+	input += ",";
+	input += std::to_string(testnumber3);
+
+	REQUIRE_THROWS_AS(s.Add(input), std::domain_error);
+
+	input.clear();
+	input = std::to_string(testnumber1);
+	input += ",";
+	input += std::to_string(testnumber1);
+	input += ",";
+	input += std::to_string(testnumber2);
+
+	REQUIRE_THROWS_AS(s.Add(input), std::domain_error);
+}
