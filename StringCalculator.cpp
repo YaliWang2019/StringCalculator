@@ -1,5 +1,6 @@
 
 #include "StringCalculator.hpp"
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -34,7 +35,10 @@ int StringCalculator::Add(std::string numbers)
 		}
 
 		for (const auto& entry : entries) {
-			output += std::stoi(entry);
+			
+			int new_value = std::stoi(entry);
+			if (new_value < 0) throw std::domain_error("Negative input not allowed. Improper value : " + std::to_string(new_value));
+			output += new_value;
 		}
 	}
 
