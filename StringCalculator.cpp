@@ -38,6 +38,7 @@ int StringCalculator::Add(std::string numbers)
 			
 			int new_value = std::stoi(entry);
 			if (new_value < 0) throw std::domain_error("Negative input not allowed. Improper value : " + std::to_string(new_value));
+			if (new_value > 1000) continue;
 			output += new_value;
 		}
 	}
