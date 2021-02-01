@@ -162,3 +162,23 @@ TEST_CASE("Negative Numbers Throw an Exception") {
 
 	REQUIRE_THROWS_AS(s.Add(input), std::domain_error);
 }
+
+TEST_CASE("Numbers >1000 are ignored") {
+
+	StringCalculator s;
+
+	int testnumber1 = 1314;
+	int testnumber2 = 372;
+	int testnumber3 = 1336;
+
+	std::string input = std::to_string(testnumber1);
+
+	REQUIRE(s.Add(input) == 0);
+
+	input += ",";
+	input += std::to_string(testnumber2);
+	input += ",";
+	input += std::to_string(testnumber3);
+
+	REQUIRE(s.Add(input) == testnumber2);
+}
