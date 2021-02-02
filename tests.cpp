@@ -5,6 +5,7 @@
 #include <string>
 
 // 1. An empty string returns zero
+// 1b. Non-numeric string throws exception
 // 2. A single number returns the value
 // 3. Two numbers, comma delimited, returns the sum
 // 4. Two numbers, newline delimited, returns the sum
@@ -21,6 +22,14 @@ TEST_CASE( "Empty string returns 0") {
 	std::string num = "";
 
 	REQUIRE(s.Add(num) == 0);
+}
+
+TEST_CASE("Non-numeric string throws exception") {
+
+	StringCalculator s;
+	std::string input = "anything_but_a_number";
+
+	REQUIRE_THROWS_AS(s.Add(input), std::invalid_argument);
 }
 
 TEST_CASE("Single number returns its value") {
