@@ -191,3 +191,18 @@ TEST_CASE("Numbers >1000 are ignored") {
 
 	REQUIRE(s.Add(input) == testnumber2);
 }
+
+TEST_CASE("Single char delimiter can be spcified") {
+
+	StringCalculator s;
+
+	int testnumber1 = 575;
+	int testnumber2 = 299;
+	int testnumber3 = 411;
+	std::string custom_delim = "#";
+
+	std::string input = custom_delim + std::to_string(testnumber1) + custom_delim +
+		std::to_string(testnumber2) + custom_delim + std::to_string(testnumber3);
+
+	REQUIRE(s.Add(input) == testnumber1 + testnumber2 + testnumber3);
+}
