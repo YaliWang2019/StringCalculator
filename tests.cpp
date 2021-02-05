@@ -222,6 +222,21 @@ TEST_CASE("Incomplete Multi char delimiter throws an error") {
 	REQUIRE_THROWS_AS(s.Add(input), std::invalid_argument);
 }
 
+TEST_CASE("Invalid Multi char delimiter throws an error") {
+
+	StringCalculator s;
+
+	int testnumber1 = 17;
+	int testnumber2 = 45;
+	int testnumber3 = 92;
+	std::string custom_delim = "#&#";
+
+	std::string input = "[" + custom_delim + "]" + std::to_string(testnumber1) + custom_delim +
+		std::to_string(testnumber2) + "###" + std::to_string(testnumber3);
+
+	REQUIRE_THROWS_AS(s.Add(input), std::invalid_argument);
+}
+
 TEST_CASE("Multi char delimiter can be spcified") {
 
 	StringCalculator s;
