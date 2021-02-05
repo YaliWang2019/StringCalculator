@@ -5,10 +5,10 @@
 #include <unordered_set>
 #include <vector>
 
-bool CharSetContains(std::unordered_set<char> char_set, const char c)
+bool DelimSetContains(std::unordered_set<std::string> delimiters, const std::string s)
 {
-	auto set_check = char_set.find(c);
-	return set_check != char_set.end();
+	auto set_check = delimiters.find(s);
+	return set_check != delimiters.end();
 }
 
 StringCalculator::StringCalculator() {};
@@ -25,29 +25,65 @@ int StringCalculator::Add(std::string numbers)
 		// delimiting character is seen, then begins the next entry
 
 		std::vector<std::string> entries;
-		std::unordered_set<char> delims;
-		delims.insert('\n');
-		delims.insert(',');
+		std::unordered_set<std::string> delims;
 
-		if (!isdigit(numbers[0]) && numbers[0] != '-')
+		delims.insert("\n");
+		delims.insert(",");
+
+		int curr_pos = 0;
+
+		if (!isdigit(numbers[0]) && numbers[0] != '-' && numbers[0] != '[')
 		{
-			delims.insert(numbers[0]);
+			delims.insert(std::string(1, numbers[0]));
 			numbers = numbers.substr(1);
 		}
-
-		entries.push_back(numbers.substr(0, 1));
-		int current_entry = 0;
-
-		for (int i = 1; i < numbers.length(); i++)
+		else if (numbers[0] == '[')
 		{
-			//if (numbers.substr(i, 1) == "\n" || numbers.substr(i, 1) == ",") {
-			if (CharSetContains(delims,numbers[i])) {
+			curr_pos++;
+			std::string cust_delim;
+			while (numbers[curr_pos] != ']')
+			{
+				cust_delim += numbers[curr_pos];
+				curr_pos++;
+
+				if (curr_pos == numbers.length())
+				{
+					throw std::invalid_argument("Custom delimiter defintion incomplete.");
+				}
+			}
+
+			delims.insert(cust_delim);
+			curr_pos++;
+		}
+
+		entries.push_back(numbers.substr(curr_pos, 1));
+		int current_entry = 0;
+		curr_pos++;
+
+		for (int i = curr_pos; i < numbers.length(); i++)
+		{
+			if (!isdigit(numbers[i]))
+			{
+				// NOTE : this method has the potential to 'skip' an entered
+				//        negative number thinking the '-' was the beginning of
+				//        a custom delimiter; en exception will still be raised,
+				//        just not the domain exception regarding negatives
+
+				std::string possible_delimiter(1, numbers[i]);
+				while (!DelimSetContains(delims, possible_delimiter))
+				{
+					i++;
+					if (i == numbers.length()) throw std::invalid_argument("Invalid delimiter led to reading end of input");
+					
+					possible_delimiter += numbers[i];
+				}
+				
 				current_entry++;
 				i++;
-				entries.push_back(numbers.substr(i, 1));
+				if (i < numbers.length()) entries.push_back(numbers.substr(i, 1));
 			}
 			else {
-				entries[current_entry] += numbers.substr(i, 1);
+				entries[current_entry] += numbers[i];
 			}
 		}
 
