@@ -206,3 +206,18 @@ TEST_CASE("Single char delimiter can be spcified") {
 
 	REQUIRE(s.Add(input) == testnumber1 + testnumber2 + testnumber3);
 }
+
+TEST_CASE("Multi char delimiter can be spcified") {
+
+	StringCalculator s;
+
+	int testnumber1 = 17;
+	int testnumber2 = 45;
+	int testnumber3 = 92;
+	std::string custom_delim = "#&#";
+
+	std::string input = "[" + custom_delim + "]" + std::to_string(testnumber1) + custom_delim +
+		std::to_string(testnumber2) + custom_delim + std::to_string(testnumber3);
+
+	REQUIRE(s.Add(input) == testnumber1 + testnumber2 + testnumber3);
+}
